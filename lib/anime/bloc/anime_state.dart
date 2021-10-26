@@ -1,4 +1,4 @@
-import 'package:infinit_list/anime/models/anime.dart';
+import 'package:infinit_list/app/modules/anime/domain/entities/anime.dart';
 
 abstract class AnimeState {
   const AnimeState();

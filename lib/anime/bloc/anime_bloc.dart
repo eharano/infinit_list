@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:infinit_list/anime/bloc/anime_event.dart';
 import 'package:infinit_list/anime/bloc/anime_state.dart';
-import 'package:infinit_list/anime/models/anime.dart';
+import 'package:infinit_list/app/modules/anime/domain/entities/anime.dart';
 import 'package:infinit_list/anime/repository/anime_repository.dart';
 
 class AnimeBloc extends Bloc<AnimeEvent, AnimeState> {

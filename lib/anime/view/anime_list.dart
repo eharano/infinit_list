@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:infinit_list/anime/models/anime.dart';
+import 'package:infinit_list/app/modules/anime/domain/entities/anime.dart';
 
 class AnimeList extends StatefulWidget {
   const AnimeList({Key? key}) : super(key: key);
@@ -13,7 +13,8 @@ class AnimeList extends StatefulWidget {
 
 class _AnimeListState extends State<AnimeList> {
   Future<List<AnimeModel>> _getAnimes() async {
-    var data = await http.get(Uri.parse("https://www.intoxianime.com/?rest_route=/wp/v2/posts&page=1&per_page=5"));
+    var data = await http.get(Uri.parse(
+        "https://www.intoxianime.com/?rest_route=/wp/v2/posts&page=1&per_page=5"));
 
     var jsonData = json.decode(data.body);
 
