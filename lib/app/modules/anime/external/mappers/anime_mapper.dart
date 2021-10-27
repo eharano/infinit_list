@@ -15,7 +15,7 @@ class AnimeMapper {
         image: map['image'] as String,
       );
     } catch (e, stacktrace) {
-      throw AnimeMappperError(
+      throw AnimeMappersError(
         message: e.toString(),
         stacktrace: stacktrace,
       );
@@ -31,7 +31,7 @@ class AnimeMapper {
         'image': anime.image,
       };
     } catch (e, stacktrace) {
-      throw AnimeMappperError(
+      throw AnimeMappersError(
         message: e.toString(),
         stacktrace: stacktrace,
       );
@@ -42,7 +42,7 @@ class AnimeMapper {
     try {
       return maps.map((map) => fromMap(map: map)).toList();
     } catch (e, stacktrace) {
-      throw AnimeMappperError(
+      throw AnimeMappersError(
         message: e.toString(),
         stacktrace: stacktrace,
       );

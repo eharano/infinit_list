@@ -23,7 +23,7 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
           maps: (response.data as List).cast<Map<String, dynamic>>());
     } on HttpClientError {
       rethrow;
-    } on AnimeMappperError {
+    } on AnimeMappersError {
       rethrow;
     } catch (e, stackTrace) {
       throw DataSourceError(
