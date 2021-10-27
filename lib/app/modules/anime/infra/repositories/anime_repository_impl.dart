@@ -20,7 +20,7 @@ class AnimeRepositoryImpl implements AnimeRepository {
     try {
       final response = await dataSource.getAll(queries: params.toMap());
       return Right(response);
-    } on DataSourceFail catch (error) {
+    } on DataSourceError catch (error) {
       return Left(error);
     } on Failure catch (error) {
       return Left(error);
