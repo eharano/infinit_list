@@ -10,9 +10,9 @@ class AnimeMapper {
     try {
       return Anime(
         id: map['id'] as int,
-        title: map['title'] as String,
+        title: map['title']['rendered'] as String,
         link: map['link'] as String,
-        image: map['image'] as String,
+        image: map['yoast_head_json']['og_image'][0]['url'] as String,
       );
     } catch (e, stacktrace) {
       throw AnimeMappersError(
