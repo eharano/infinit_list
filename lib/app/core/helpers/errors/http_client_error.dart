@@ -1,7 +1,9 @@
 import 'failure.dart';
 
 class HttpClientError extends Failure {
-  HttpClientError(String message, StackTrace stackTrace)
+  final int? statusCode;
+
+  HttpClientError(String message, StackTrace stackTrace, {this.statusCode})
       : super(
           message: message,
           stackTrace: stackTrace,

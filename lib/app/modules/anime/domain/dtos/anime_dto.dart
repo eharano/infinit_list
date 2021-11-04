@@ -1,17 +1,17 @@
-class AnimeGetAllDTO {
+class AnimeDTO {
   final int page;
   final int perPage;
 
-  const AnimeGetAllDTO({
+  const AnimeDTO({
     this.page = 1,
     this.perPage = 10,
   });
 
-  AnimeGetAllDTO copyWith({
+  AnimeDTO copyWith({
     int? page,
     int? perPage,
   }) {
-    return AnimeGetAllDTO(
+    return AnimeDTO(
       page: page ?? this.page,
       perPage: perPage ?? this.perPage,
     );

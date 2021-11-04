@@ -20,7 +20,7 @@ class AppWidget extends StatelessWidget {
         providers: [
           BlocProvider(
             create: (context) => AnimeBloc(
-              animeGetAllUseCase: context.read<AnimeGetAllUseCaseImpl>(),
+              useCase: context.read<AnimeGetAllUseCaseImpl>(),
             ),
           ),
         ],

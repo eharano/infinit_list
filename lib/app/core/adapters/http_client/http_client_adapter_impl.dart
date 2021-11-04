@@ -17,21 +17,18 @@ class HttpClientAdapterImpl implements HttpClientAdapter {
   Future<ResponseAdapter> get({
     required Map<String, dynamic> queries,
   }) async {
-    try {
-      final response = await dio.get(url, queryParameters: queries);
-      if (!(response.statusCode == 200)) {
-        throw HttpClientError(
-          response.statusMessage ?? 'Erro inesperado',
-          StackTrace.current,
-        );
-      }
-
-      return ResponseAdapter(
-        data: response.data,
-        statusCode: response.statusCode!,
+    final response = await dio.get(url, queryParameters: queries);
+    if (!(response.statusCode == 200)) {
+      throw HttpClientError(
+        response.statusMessage ?? 'Erro inesperado',
+        StackTrace.current,
+        statusCode: response.statusCode,
       );
-    } catch (e, stacktrace) {
-      throw HttpClientError(e.toString(), stacktrace);
     }
+
+    return ResponseAdapter(
+      data: response.data,
+      statusCode: response.statusCode!,
+    );
   }
 }

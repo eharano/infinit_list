@@ -15,7 +15,7 @@ class AnimeGetAllUseCaseImpl implements AnimeGetAllUseCase {
 
   @override
   Future<Either<Failure, List<Anime>>> call({
-    required AnimeGetAllDTO params,
+    required AnimeDTO params,
   }) {
     return repository.getAll(params: params);
   }

@@ -5,9 +5,20 @@ abstract class AnimeEvent extends Equatable {
 }
 
 class AnimeFetchEvent extends AnimeEvent {
-  final AnimeGetAllDTO params;
+  final AnimeDTO params;
 
   const AnimeFetchEvent({
+    required this.params,
+  });
+
+  @override
+  List<Object?> get props => [params];
+}
+
+class AnimePaginateEvent extends AnimeEvent {
+  final AnimeDTO params;
+
+  const AnimePaginateEvent({
     required this.params,
   });
 

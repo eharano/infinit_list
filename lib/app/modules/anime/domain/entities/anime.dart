@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 
 class Anime extends Equatable {
-  final int id;
-  final String title;
-  final String link;
-  final String image;
+  final int? id;
+  final String? title;
+  final String? link;
+  final String? image;
 
   const Anime({
     required this.id,

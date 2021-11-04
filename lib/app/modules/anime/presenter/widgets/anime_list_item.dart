@@ -13,20 +13,20 @@ class AnimeListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      // leading: Image.network(
-      //   anime.image!,
-      //   loadingBuilder: (context, widget, imageChunkEvent) {
-      //     return imageChunkEvent == null
-      //         ? widget
-      //         : const CircularProgressIndicator();
-      //   },
-      //   height: 150,
-      //   width: 150,
-      // ),
-      isThreeLine: true,
-      dense: true,
+      leading: Image.network(
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
+        // loadingBuilder: (context, widget, imageChunkEvent) {
+        //   return imageChunkEvent == null
+        //       ? widget
+        //       : const CircularProgressIndicator();
+        // },
+        height: 150,
+        width: 100,
+      ),
+      // isThreeLine: true,
+      // dense: true,
       title: Text('ID: ${anime.id.toString()}'),
-      subtitle: Text(anime.title),
+      subtitle: Text(anime.title ?? ''),
     );
   }
 }

@@ -15,64 +15,18 @@ class AnimeView extends StatefulWidget {
 
 class _AnimeViewState extends State<AnimeView> {
   final _scrollController = ScrollController();
-  final params = AnimeGetAllDTO(page: 1, perPage: 20);
+  ValueNotifier<AnimeDTO> params = ValueNotifier(
+    const AnimeDTO(
+      page: 1,
+      perPage: 100,
+    ),
+  );
 
   @override
   void initState() {
     super.initState();
+    context.read<AnimeBloc>().add(AnimeFetchEvent(params: params.value));
     _scrollController.addListener(_onScroll);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Lista de Animes'),
-      ),
-      body: BlocBuilder<AnimeBloc, AnimeState>(
-        bloc: context.read<AnimeBloc>()
-          ..add(
-            const AnimeFetchEvent(
-              params: AnimeGetAllDTO(),
-            ),
-          ),
-        builder: (context, state) {
-          switch (state.runtimeType) {
-            case AnimeSuccessState:
-              state as AnimeSuccessState;
-              if (state.animes.isEmpty) {
-                return const Center(
-                  child: Text('No animes.'),
-                );
-              }
-
-              return ListView.builder(
-                itemBuilder: (BuildContext context, int index) {
-                  if (index >= state.animes.length) {
-                    return const Text('');
-                  }
-                  return AnimeListItem(
-                    anime: state.animes[index],
-                  );
-                },
-              );
-
-            case AnimeErrorState:
-              state as AnimeErrorState;
-              return Center(
-                child: Text(state.error),
-              );
-
-            case AnimeLoadingState:
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            default:
-              return Container();
-          }
-        },
-      ),
-    );
   }
 
   @override
@@ -84,10 +38,14 @@ class _AnimeViewState extends State<AnimeView> {
   }
 
   void _onScroll() {
-    if (_isBottom) {
+    final state = context.read<AnimeBloc>().state;
+    final page = params.value.page;
+    if (_isBottom && state is AnimeSuccessState && !state.isLoading) {
+      params.value = params.value.copyWith(page: page + 1);
+
       context.read<AnimeBloc>().add(
-            const AnimeFetchEvent(
-              params: AnimeGetAllDTO(),
+            AnimePaginateEvent(
+              params: params.value,
             ),
           );
     }
@@ -98,5 +56,61 @@ class _AnimeViewState extends State<AnimeView> {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.offset;
     return currentScroll >= (maxScroll * 0.9);
+  }
+
+  buildBody(AnimeState state) {
+    switch (state.runtimeType) {
+      case AnimeSuccessState:
+        state as AnimeSuccessState;
+        if (state.animes.isEmpty) {
+          return const Center(
+            child: Text('No animes.'),
+          );
+        }
+
+        return ListView.builder(
+          controller: _scrollController,
+          shrinkWrap: true,
+          itemCount: state.animes.length + 1,
+          itemBuilder: (BuildContext context, int index) {
+            if (index >= state.animes.length) {
+              return Visibility(
+                child: const BottomLoader(),
+                visible: !state.hasMax,
+                replacement: const SizedBox.shrink(),
+              );
+            }
+            return AnimeListItem(
+              anime: state.animes[index],
+            );
+          },
+        );
+
+      case AnimeErrorState:
+        state as AnimeErrorState;
+        return Center(
+          child: Text(state.error),
+        );
+
+      case AnimeLoadingState:
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      default:
+        return Container();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final bloc = context.watch<AnimeBloc>();
+    Widget body = buildBody(bloc.state);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Lista de Animes'),
+      ),
+      body: body,
+    );
   }
 }

@@ -20,29 +20,29 @@ class AnimeLoadingState extends AnimeState {
 
 class AnimeSuccessState extends AnimeState {
   final List<Anime> animes;
-  final int page;
-  final bool isFetching;
+  final bool hasMax;
+  final bool isLoading;
 
   const AnimeSuccessState({
     required this.animes,
-    required this.page,
-    this.isFetching = false,
+    this.hasMax = false,
+    this.isLoading = false,
   });
 
   AnimeSuccessState copyWith({
     List<Anime>? animes,
-    int? page,
-    bool? isFetching,
+    bool? hasMax,
+    bool? isLoading,
   }) {
     return AnimeSuccessState(
       animes: animes ?? this.animes,
-      page: page ?? this.page,
-      isFetching: isFetching ?? this.isFetching,
+      hasMax: hasMax ?? this.hasMax,
+      isLoading: isLoading ?? this.isLoading,
     );
   }
 
   @override
-  List<Object?> get props => [animes];
+  List<Object?> get props => [animes, hasMax];
 }
 
 class AnimeErrorState extends AnimeState {
