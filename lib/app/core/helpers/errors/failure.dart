@@ -6,7 +6,4 @@ abstract class Failure {
     required this.message,
     required this.stackTrace,
   });
-
-  // @TODO -- gerar log
-
 }
